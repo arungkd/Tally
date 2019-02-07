@@ -1,0 +1,106 @@
+CREATE DATABASE `stock` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+DROP TABLE IF EXISTS `stock`.`customer`;
+CREATE TABLE  `stock`.`customer` (
+  `customerid` int(11) NOT NULL,
+  `customername` varchar(100) DEFAULT NULL,
+  `companyname` varchar(100) DEFAULT NULL,
+  `address1` varchar(100) DEFAULT NULL,
+  `address2` varchar(100) DEFAULT NULL,
+  `contactnumber` varchar(10) DEFAULT NULL,
+  `email` varchar(50) DEFAULT NULL,
+  `gstnumber` varchar(20) DEFAULT NULL,
+  PRIMARY KEY (`customerid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `stock`.`shop`;
+CREATE TABLE  `stock`.`shop` (
+  `shopid` int(11) NOT NULL,
+  `shopname` varchar(100) DEFAULT NULL,
+  `address1` varchar(100) DEFAULT NULL,
+  `address2` varchar(100) DEFAULT NULL,
+  `pincode` varchar(8) DEFAULT NULL,
+  `gstnumber` varchar(15) DEFAULT NULL,
+  `phone` varchar(12) DEFAULT NULL,
+  PRIMARY KEY (`shopid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `stock`.`spares`;
+CREATE TABLE  `stock`.`spares` (
+  `spareid` int(11) NOT NULL,
+  `sparename` varchar(100) DEFAULT NULL,
+  `spareunit` varchar(10) DEFAULT NULL,
+  `sparedescription` varchar(100) DEFAULT NULL,
+  `spareprice` float DEFAULT NULL,
+  `sparestock` int(11) DEFAULT NULL,
+  PRIMARY KEY (`spareid`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `stock`.`sparesalesgstledger`;
+CREATE TABLE  `stock`.`sparesalesgstledger` (
+  `ledgergstid` int(11) NOT NULL,
+  `customerid` int(11) DEFAULT NULL,
+  `billnumber` int(11) DEFAULT NULL,
+  `billdate` date DEFAULT NULL,
+  `billtime` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `billamount` int(11) DEFAULT NULL,
+  `billcgst` int(11) DEFAULT NULL,
+  `billsgst` int(11) DEFAULT NULL,
+  `billroundoff` int(11) DEFAULT NULL,
+  `billgranttotal` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ledgergstid`),
+  KEY `fk_sparesalesgstledger` (`customerid`),
+  CONSTRAINT `fk_sparesalesgstledger` FOREIGN KEY (`customerid`) REFERENCES `customer` (`customerid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `stock`.`sparesalesledger`;
+CREATE TABLE  `stock`.`sparesalesledger` (
+  `ledgerid` int(11) NOT NULL,
+  `customerid` int(11) DEFAULT NULL,
+  `billnumber` varchar(10) DEFAULT NULL,
+  `billdate` date DEFAULT NULL,
+  `billtime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `billtotalamount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`ledgerid`),
+  KEY `fk_sparesalesledger_customer` (`customerid`),
+  CONSTRAINT `fk_sparesalesledger_customer` FOREIGN KEY (`customerid`) REFERENCES `customer` (`customerid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `stock`.`sparesalesledgertransaction`;
+CREATE TABLE  `stock`.`sparesalesledgertransaction` (
+  `sparesalesledgertxnid` int(11) NOT NULL,
+  `ledgerid` int(11) DEFAULT NULL,
+  `spareid` int(11) DEFAULT NULL,
+  `sparename` varchar(100) DEFAULT NULL,
+  `spareuom` varchar(10) DEFAULT NULL,
+  `sparequantity` int(11) DEFAULT NULL,
+  `spareprice` float DEFAULT NULL,
+  `sparediscount` float DEFAULT NULL,
+  `sparerate` float DEFAULT NULL,
+  `spareamount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`sparesalesledgertxnid`),
+  KEY `fk_sparesalesledgertransaction` (`ledgerid`),
+  KEY `fk_sparesalesledgertransaction1` (`spareid`),
+  CONSTRAINT `fk_sparesalesledgertransaction` FOREIGN KEY (`ledgerid`) REFERENCES `sparesalesledger` (`ledgerid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sparesalesledgertransaction1` FOREIGN KEY (`spareid`) REFERENCES `spares` (`spareid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+DROP TABLE IF EXISTS `stock`.`sparesalesgstledgertransaction`;
+CREATE TABLE  `stock`.`sparesalesgstledgertransaction` (
+  `sparesalesledgertxnid` int(11) NOT NULL,
+  `ledgerid` int(11) DEFAULT NULL,
+  `spareid` int(11) DEFAULT NULL,
+  `sparename` varchar(100) DEFAULT NULL,
+  `spareuom` varchar(10) DEFAULT NULL,
+  `sparequantity` int(11) DEFAULT NULL,
+  `spareprice` float DEFAULT NULL,
+  `sparediscount` float DEFAULT NULL,
+  `sparerate` float DEFAULT NULL,
+  `spareamount` int(11) DEFAULT NULL,
+  PRIMARY KEY (`sparesalesledgertxnid`),
+  KEY `fk_sparesalesledgertransaction` (`ledgergstid`),
+  KEY `fk_sparesalesledgertransaction1` (`spareid`),
+  CONSTRAINT `fk_sparesalesledgertransaction` FOREIGN KEY (`ledgergstid`) REFERENCES `sparesalesgstledger` (`ledgergstid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_sparesalesledgertransaction1` FOREIGN KEY (`spareid`) REFERENCES `spares` (`spareid`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
