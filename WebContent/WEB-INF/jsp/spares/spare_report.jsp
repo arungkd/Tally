@@ -28,9 +28,6 @@
  <script type="text/javascript" src="resources/assets/js/jquery-ui.js"></script>
  
  <script type="text/javascript">
-      $(document).ready(function () {
-        alert("hi");
-      });
       
       $( "#countries" ).autocomplete({
           source: function( request, response ) {
