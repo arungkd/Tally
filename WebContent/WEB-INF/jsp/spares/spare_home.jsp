@@ -31,9 +31,6 @@
 								<label class="form-label">Spare Price</label>
 								<form:input path="spareprice" class="form-control" />
 							</div>
-							<div class="form-group">Autocomplete</label>
-								<input id="products" style="width: 100%;" />
-							</div>
 						</fieldset>
 						<div class="tile-footer">
 			              <button class="btn btn-primary" type="submit">Submit</button>
