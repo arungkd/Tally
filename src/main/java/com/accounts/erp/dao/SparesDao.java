@@ -1,7 +1,13 @@
 package com.accounts.erp.dao;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
@@ -21,5 +27,20 @@ public class SparesDao {
 		int result = jdbcTemplate.update(SqlConstants.SAVESPARES,new Object[] {spares.getSparename(), spares.getSpareunit(), spares.getSparedescription(),
 				spares.getSpareprice(), spares.getSparestock()});
 		return result;
+	}
+	
+	public List<Spares> getSparesBySearchString(final String searchString) {
+		
+		List<Spares> queryResult = jdbcTemplate.query(SqlConstants.SELECT_SPARES+"'"+searchString+"%'", new BeanPropertyRowMapper<>(Spares.class));
+		if (queryResult == null) {
+			queryResult = new ArrayList<Spares>();
+		}
+		return queryResult;
+	}
+	
+	public Spares getSparesById(final int spareId) {
+		
+		Spares spare =  jdbcTemplate.queryForObject(SqlConstants.SELECT_SPARES_BY_ID,new Object[] {spareId}, new BeanPropertyRowMapper<>(Spares.class));
+		return spare;
 	}
 }
