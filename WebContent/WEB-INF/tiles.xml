@@ -26,6 +26,13 @@
 	<definition name="sparereport" extends="base.definition">
 		<put-attribute name="body" value="/WEB-INF/jsp/spares/spare_report.jsp" />
 	</definition>
+	
+	<definition name="customerhome" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/customer/customer_home.jsp" />
+	</definition>
 
+	<definition name="customeredit" extends="base.definition">
+		<put-attribute name="body" value="/WEB-INF/jsp/customer/customer_edit.jsp" />
+	</definition>
 
 </tiles-definitions>  

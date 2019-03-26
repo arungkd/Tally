@@ -31,6 +31,10 @@
 								<label class="form-label">Spare Price</label>
 								<form:input path="spareprice" class="form-control" />
 							</div>
+							<div class="form-group">
+								<label class="form-label">Spare Stock</label>
+								<form:input path="sparestock" class="form-control" />
+							</div>
 						</fieldset>
 						<div class="tile-footer">
 			              <button class="btn btn-primary" type="submit">Submit</button>

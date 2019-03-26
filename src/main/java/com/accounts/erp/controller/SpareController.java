@@ -26,11 +26,31 @@ public class SpareController {
 	SparesDao sparesDao;
 	
 	@RequestMapping(value = "sparehome", method = RequestMethod.GET)
-	public ModelAndView  login(HttpServletRequest request) {
+	public ModelAndView  sparehome(HttpServletRequest request) {
 		
 		ModelAndView model = new ModelAndView();
 		model.addObject("spares",new Spares());
 		model.setViewName("sparehome");
+		return model;
+	}
+	
+	@RequestMapping(value = "spareedit", method = RequestMethod.GET)
+	public ModelAndView  spareedit(HttpServletRequest request) {
+		
+		ModelAndView model = new ModelAndView();
+		model.addObject("spares",new Spares());
+		model.setViewName("spareedit");
+		return model;
+	}
+	
+	@RequestMapping(value = "/editSpare", method = RequestMethod.POST)
+	public ModelAndView editSpare(HttpServletRequest request,  @ModelAttribute("spares") Spares spares) {
+		ModelAndView model = new ModelAndView();
+		System.out.println("spare id ************* "+spares.getSpareid());
+		int result = sparesDao.editSpareDetails(spares);
+		model.setViewName("spareedit");
+		model.addObject(new Spares());
+		model.addObject("status","success");
 		return model;
 	}
 	

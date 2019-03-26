@@ -29,6 +29,13 @@ public class SparesDao {
 		return result;
 	}
 	
+	
+	public int editSpareDetails(Spares spares) {
+		int result = jdbcTemplate.update(SqlConstants.UPDATESPARES,new Object[] {spares.getSparename(), spares.getSpareunit(), spares.getSparedescription(),
+				spares.getSpareprice(), spares.getSparestock(), spares.getSpareid()});
+		return result;
+	}
+	
 	public List<Spares> getSparesBySearchString(final String searchString) {
 		
 		List<Spares> queryResult = jdbcTemplate.query(SqlConstants.SELECT_SPARES+"'"+searchString+"%'", new BeanPropertyRowMapper<>(Spares.class));

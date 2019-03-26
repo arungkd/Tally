@@ -10,7 +10,14 @@
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Spares</span><i class="treeview-indicator fa fa-angle-right"></i></a>
           <ul class="treeview-menu">
             <li><a class="treeview-item" href="sparehome"><i class="icon fa fa-arrow-right"></i> Add </a></li>
-            <li><a class="treeview-item" href="#"><i class="icon fa fa-arrow-right"></i> Edit </a></li>
+            <li><a class="treeview-item" href="spareedit"><i class="icon fa fa-arrow-right"></i> Edit </a></li>
+            <li><a class="treeview-item" href="#"><i class="icon fa fa-arrow-right"></i> Delete </a></li>
+          </ul>
+        </li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-edit"></i><span class="app-menu__label">Customer</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+          <ul class="treeview-menu">
+            <li><a class="treeview-item" href="customerhome"><i class="icon fa fa-arrow-right"></i> Add </a></li>
+            <li><a class="treeview-item" href="customeredit"><i class="icon fa fa-arrow-right"></i> Edit </a></li>
             <li><a class="treeview-item" href="#"><i class="icon fa fa-arrow-right"></i> Delete </a></li>
           </ul>
         </li>
